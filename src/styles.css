@@ -1,0 +1,147 @@
+:root {
+  --color-purple-500: #8b5cf6;
+  --color-pink-500: #ec4899;
+  --color-blue-500: #3b82f6;
+  --color-blue-600: #2563eb;
+  --color-blue-700: #1d4ed8;
+  --color-green-500: #22c55e;
+  --color-green-700: #15803d;
+  --color-yellow-500: #eab308;
+  --color-gray-600: #4b5563;
+  --color-gray-800: #1f2937;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: system-ui, -apple-system, sans-serif;
+}
+
+.min-h-screen {
+  min-height: 100vh;
+}
+
+.min-w-screen {
+  min-width: 100vw;
+}
+
+.flex {
+  display: flex;
+}
+
+.items-center {
+  align-items: center;
+}
+
+.justify-center {
+  justify-content: center;
+}
+
+.text-center {
+  text-align: center;
+}
+
+.relative {
+  position: relative;
+}
+
+.absolute {
+  position: absolute;
+}
+
+.bg-gradient-welcome {
+  background: linear-gradient(
+    135deg,
+    var(--color-purple-500),
+    var(--color-pink-500)
+  );
+}
+
+.bg-gradient-game {
+  background: linear-gradient(
+    135deg,
+    var(--color-blue-500),
+    var(--color-purple-500)
+  );
+}
+
+.bg-gradient-results {
+  background: linear-gradient(
+    135deg,
+    var(--color-green-500),
+    var(--color-blue-500)
+  );
+}
+
+.card {
+  background: white;
+  border-radius: 1rem;
+  padding: 2rem;
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+  width: 100%;
+  max-width: 32rem;
+}
+
+.icon {
+  width: 4rem;
+  height: 4rem;
+  margin: 0 auto 2rem;
+}
+
+.icon-purple {
+  color: var(--color-purple-500);
+}
+
+.icon-yellow {
+  color: var(--color-yellow-500);
+}
+
+.title {
+  font-size: 2.25rem;
+  font-weight: bold;
+  color: var(--color-gray-800);
+  margin-bottom: 1.5rem;
+}
+
+.subtitle {
+  color: var(--color-gray-600);
+  font-size: 1.125rem;
+  margin-bottom: 2rem;
+}
+
+.button {
+  padding: 0.75rem 2rem;
+  border-radius: 9999px;
+  font-size: 1.125rem;
+  font-weight: 600;
+  border: none;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.button:hover {
+  transform: scale(1.05);
+  opacity: 0.9;
+}
+
+.button-welcome {
+  background: linear-gradient(
+    to right,
+    var(--color-purple-500),
+    var(--color-pink-500)
+  );
+  color: white;
+}
+
+.button-results {
+  background: linear-gradient(
+    to right,
+    var(--color-green-500),
+    var(--color-blue-500)
+  );
+  color: white;
+}

@@ -1,5 +1,6 @@
 {
   "name": "spinning-wheel-game",
+  "description": "A spinning wheel game built with React, TypeScript and Vite",
   "private": true,
   "version": "0.0.0",
   "type": "module",
@@ -10,6 +11,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "lucide-react": "^0.487.0",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
     "react-router-dom": "^7.5.0"
