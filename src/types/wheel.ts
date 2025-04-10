@@ -8,3 +8,10 @@ export type SpinResult = {
   segment: WheelSegment;
   degrees: number;
 };
+
+export type Theme = {
+  background: string;
+  text: string;
+  card: string;
+  border: string;
+};
