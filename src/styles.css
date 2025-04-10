@@ -65,7 +65,7 @@ body {
   background: linear-gradient(
     135deg,
     var(--color-blue-500),
-    var(--color-purple-500)
+    white
   );
 }
 
@@ -78,6 +78,10 @@ body {
 }
 
 .card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
   background: white;
   border-radius: 1rem;
   padding: 2rem;
@@ -148,125 +152,125 @@ body {
 
 /* Wheel Container */
 .wheel-container {
-    position: relative;
-    width: 20rem;
-    height: 20rem;
-    margin: 0 auto;
+  position: relative;
+  width: 20rem;
+  height: 20rem;
+  margin: 0 auto;
+}
+
+@media (min-width: 768px) {
+  .wheel-container {
+    width: 24rem;
+    height: 24rem;
   }
-  
-  @media (min-width: 768px) {
-    .wheel-container {
-      width: 24rem;
-      height: 24rem;
-    }
-  }
-  
-  /* Wheel Base */
-  .wheel {
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    border-radius: 50%;
-    overflow: hidden;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-  }
-  
-  /* Wheel Segments */
-  .wheel-segment {
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    transform-origin: 50% 50%;
-    clip-path: polygon(50% 50%, 100% 0, 100% 100%);
-  }
-  
-  .segment-content {
-    position: relative;
-    width: 100%;
-    height: 100%;
-  }
-  
-  .segment-label {
-    position: absolute;
-    top: 60%;
-    left: 75%;
-    font-size: 0.8rem;
-    transform: translate(-50%, -50%) rotate(calc(var(--segment-degree) * 0.5deg));
-    transform-origin: center;
-    text-align: center;
-    font-weight: bold;
-    color: white;
-    white-space: nowrap;
-  }
-  
-  /* Wheel Center & Pointer */
-  .wheel-center {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    width: 1rem;
-    height: 1rem;
-    background: white;
-    border-radius: 50%;
-    transform: translate(-50%, -50%);
-    z-index: 10;
-    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
-  }
-  
-  .wheel-pointer {
-    position: absolute;
-    top: -1rem;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 0;
-    height: 0;
-    border-left: 12px solid transparent;
-    border-right: 12px solid transparent;
-    border-bottom: 24px solid #dc2626;
-    z-index: 20;
-  }
-  
-  /* Spin Buttons */
-  .spin-buttons {
-    position: absolute;
-    bottom: -6rem;
-    left: 50%;
-    transform: translateX(-50%);
-    display: flex;
-    flex-direction: column;
-    gap: 1rem;
-    width: 100%;
-  }
-  
-  .spin-button {
-    width: 100%;
-    padding: 0.75rem 1.5rem;
-    border-radius: 0.5rem;
-    color: white;
-    border: none;
-    cursor: pointer;
-    font-weight: 600;
-    font-size: 1rem;
-    transition: all 0.2s ease;
-  }
-  
-  .spin-button:disabled {
-    opacity: 0.6;
-    cursor: not-allowed;
-  }
-  
-  .spin-button-random {
-    background-color: #2563eb;
-  }
-  
-  .spin-button-random:not(:disabled):hover {
-    background-color: #1d4ed8;
-  }
-  
-  .spin-button-predetermined {
-    background-color: #10b981;
-  }
-  
-  .spin-button-predetermined:not(:disabled):hover {
-    background-color: #059669;
-  }
+}
+
+/* Wheel Base */
+.wheel {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  overflow: hidden;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+/* Wheel Segments */
+.wheel-segment {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  transform-origin: 50% 50%;
+  clip-path: polygon(50% 50%, 100% 0, 100% 100%);
+}
+
+.segment-content {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
+.segment-label {
+  position: absolute;
+  top: 60%;
+  left: 75%;
+  font-size: 0.8rem;
+  transform: translate(-50%, -50%) rotate(calc(var(--segment-degree) * 0.5deg));
+  transform-origin: center;
+  text-align: center;
+  font-weight: bold;
+  color: white;
+  white-space: nowrap;
+}
+
+/* Wheel Center & Pointer */
+.wheel-center {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 1rem;
+  height: 1rem;
+  background: white;
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 10;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+}
+
+.wheel-pointer {
+  position: absolute;
+  top: -1rem;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 0;
+  height: 0;
+  border-left: 12px solid transparent;
+  border-right: 12px solid transparent;
+  border-bottom: 24px solid #dc2626;
+  z-index: 20;
+}
+
+/* Spin Buttons */
+.spin-buttons {
+  position: absolute;
+  bottom: -10rem;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  width: 100%;
+}
+
+.spin-button {
+  width: 100%;
+  padding: 0.75rem 1.5rem;
+  border-radius: 0.5rem;
+  color: white;
+  border: none;
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 1rem;
+  transition: all 0.2s ease;
+}
+
+.spin-button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.spin-button-random {
+  background-color: #2563eb;
+}
+
+.spin-button-random:not(:disabled):hover {
+  background-color: #1d4ed8;
+}
+
+.spin-button-predetermined {
+  background-color: #10b981;
+}
+
+.spin-button-predetermined:not(:disabled):hover {
+  background-color: #059669;
+}
