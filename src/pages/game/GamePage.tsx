@@ -3,14 +3,14 @@ import { WheelSpinner } from "../../components/WheelSpinner";
 import { SpinResult, WheelSegment } from "../../types/wheel";
 
 const WHEEL_SEGMENTS: WheelSegment[] = [
-  { id: 1, label: "100 Points", color: "#FF6B6B" },
-  { id: 2, label: "200 Points", color: "#4ECDC4" },
-  { id: 3, label: "300 Points", color: "#45B7D1" },
-  { id: 4, label: "400 Points", color: "#96CEB4" },
-  { id: 5, label: "500 Points", color: "#D4A5A5" },
-  { id: 6, label: "600 Points", color: "#9B59B6" },
-  { id: 7, label: "700 Points", color: "#3498DB" },
-  { id: 8, label: "800 Points", color: "#F1C40F" },
+  { id: 0, label: "100 Points", color: "#FF6B6B" },
+  { id: 1, label: "200 Points", color: "#4ECDC4" },
+  { id: 2, label: "300 Points", color: "#45B7D1" },
+  { id: 3, label: "400 Points", color: "#96CEB4" },
+  { id: 4, label: "500 Points", color: "#D4A5A5" },
+  { id: 5, label: "600 Points", color: "#9B59B6" },
+  { id: 6, label: "700 Points", color: "#3498DB" },
+  { id: 7, label: "800 Points", color: "#F1C40F" },
 ];
 
 const Game = () => {

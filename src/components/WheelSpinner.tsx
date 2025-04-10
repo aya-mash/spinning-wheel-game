@@ -42,7 +42,7 @@ export const WheelSpinner = ({
       setTimeout(() => {
         setIsSpinning(false);
         onSpinComplete({
-          segment: segments[targetIndex],
+          segment: segments[targetIndex - 1],
           degrees: totalRotationRef.current % 360,
         });
       }, spinDuration);
