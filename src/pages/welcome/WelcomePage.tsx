@@ -1,6 +1,6 @@
 import { useNavigate } from "react-router-dom";
 import { Sparkles } from "lucide-react";
-import { useTheme } from "../../hooks/theme";
+import { useTheme } from "../../context/hooks/theme";
 
 const Welcome = () => {
   const navigate = useNavigate();

@@ -1,7 +1,7 @@
 import { useNavigate, useLocation } from "react-router-dom";
 import { Trophy } from "lucide-react";
 import { SpinResult } from "../../types/wheel";
-import { useTheme } from "../../hooks/theme";
+import { useTheme } from "../../context/hooks/theme";
 
 const Results = () => {
   const navigate = useNavigate();

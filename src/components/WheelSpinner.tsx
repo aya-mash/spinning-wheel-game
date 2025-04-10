@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import { WheelSegment, SpinResult } from "../types/wheel";
-import { useTheme } from "../hooks/theme";
+import { useTheme } from "../context/hooks/theme";
 
 interface WheelSpinnerProps {
   segments: WheelSegment[];

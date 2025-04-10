@@ -1,7 +1,8 @@
 import { useNavigate } from "react-router-dom";
 import { WheelSpinner } from "../../components/WheelSpinner";
 import { SpinResult, WheelSegment } from "../../types/wheel";
-import { useTheme } from "../../hooks/theme";
+import { useTheme } from "../../context/hooks/theme";
+import { useSpinHistory } from "../../context/hooks/history";
 
 const WHEEL_SEGMENTS: WheelSegment[] = [
   { id: 0, label: "R100", color: "#FF6B6B" },
@@ -17,11 +18,11 @@ const WHEEL_SEGMENTS: WheelSegment[] = [
 const Game = () => {
   const navigate = useNavigate();
   const { theme } = useTheme();
+  const { addSpin } = useSpinHistory();
 
   const handleSpinComplete = (result: SpinResult) => {
-    setTimeout(() => {
-      navigate("/results", { state: { result } });
-    }, 1000);
+    addSpin(result);
+    navigate("/results", { state: { result } });
   };
 
   return (
