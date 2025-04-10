@@ -1,10 +1,24 @@
-const WelcomePage = () => {
+import { useNavigate } from "react-router-dom";
+import { Sparkles } from "lucide-react";
+
+const Welcome = () => {
+  const navigate = useNavigate();
+
   return (
     <div>
-      <h1>Welcome Page</h1>
-      <p>This is a placeholder for the welcome page.</p>
+      <div>
+        <div>
+          <Sparkles />
+        </div>
+        <h1>Spin & Win!</h1>
+        <p>
+          Try your luck with our exciting spinning wheel game. Will fortune
+          favor you today?
+        </p>
+        <button onClick={() => navigate("/game")}> Get Started</button>
+      </div>
     </div>
   );
 };
 
-export default WelcomePage;
+export default Welcome;
