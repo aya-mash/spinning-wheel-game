@@ -1,5 +1,6 @@
+import { useNavigate } from "react-router-dom";
 import { WheelSpinner } from "../../components/WheelSpinner";
-import { WheelSegment } from "../../types/wheel";
+import { SpinResult, WheelSegment } from "../../types/wheel";
 
 const WHEEL_SEGMENTS: WheelSegment[] = [
   { id: 1, label: "100 Points", color: "#FF6B6B" },
@@ -13,11 +14,21 @@ const WHEEL_SEGMENTS: WheelSegment[] = [
 ];
 
 const Game = () => {
+  const navigate = useNavigate();
+
+  const handleSpinComplete = (result: SpinResult) => {
+    setTimeout(() => {
+      navigate("/results", { state: { result } });
+    }, 1000);
+  };
   return (
     <div className="min-h-screen bg-gradient-game flex items-center justify-center min-w-screen">
       <div className="card">
         <h2 className="title">Spin the Wheel!</h2>
-        <WheelSpinner segments={WHEEL_SEGMENTS} />
+        <WheelSpinner
+          segments={WHEEL_SEGMENTS}
+          onSpinComplete={handleSpinComplete}
+        />
       </div>
     </div>
   );

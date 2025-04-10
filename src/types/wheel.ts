@@ -3,3 +3,8 @@ export type WheelSegment = {
   label: string;
   color: string;
 };
+
+export type SpinResult = {
+  segment: WheelSegment;
+  degrees: number;
+};
