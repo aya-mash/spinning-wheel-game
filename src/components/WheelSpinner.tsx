@@ -11,7 +11,7 @@ type WheelSpinnerProps = {
 export const WheelSpinner = ({
   segments,
   onSpinComplete,
-  predeterminedSegmentIndex = 0,
+  predeterminedSegmentIndex = 2,
   spinDuration = 5000,
 }: WheelSpinnerProps) => {
   const [isSpinning, setIsSpinning] = useState(false);
