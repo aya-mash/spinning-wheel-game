@@ -62,11 +62,7 @@ body {
 }
 
 .bg-gradient-game {
-  background: linear-gradient(
-    135deg,
-    var(--color-blue-500),
-    white
-  );
+  background: linear-gradient(135deg, var(--color-blue-500), white);
 }
 
 .bg-gradient-results {
@@ -273,4 +269,9 @@ body {
 
 .spin-button-predetermined:not(:disabled):hover {
   background-color: #059669;
+}
+
+.result-highlight {
+  font-weight: bold;
+  color: var(--color-blue-600);
 }
