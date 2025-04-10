@@ -1,5 +1,6 @@
 {
   "name": "spinning-wheel-game",
+  "description": "A spinning wheel game built with React, TypeScript and Vite",
   "private": true,
   "version": "0.0.0",
   "type": "module",
