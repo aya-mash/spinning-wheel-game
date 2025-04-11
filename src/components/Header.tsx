@@ -3,10 +3,12 @@ import ThemeToggle from "./ThemeToggle";
 import { useState } from "react";
 import HistoryModal from "./HistoryModal";
 import { useTheme } from "../context/hooks/theme";
+import { useNavigate } from "react-router-dom";
 
 const Header = () => {
   const { theme, isDark } = useTheme();
   const [isHistoryOpen, setIsHistoryOpen] = useState(false);
+  const navigate = useNavigate();
 
   return (
     <>
@@ -15,7 +17,17 @@ const Header = () => {
       >
         <div className="container mx-auto px-4 h-16 flex items-center justify-between">
           <div className="flex items-center gap-2">
-            <Banknote className={`w-8 h-8 ${theme.text}`} />
+            <button
+              onClick={() => navigate("/")}
+              className={`p-2 rounded-full transition-colors ${
+                isDark
+                  ? "bg-gray-700 text-yellow-400"
+                  : "bg-gray-200 text-gray-900"
+              }`}
+              aria-label="View history"
+            >
+              <Banknote className={`w-8 h-8 ${theme.text}`} />
+            </button>
             <span className={`text-xl font-semibold ${theme.text}`}>
               Spin & Win
             </span>

@@ -33,7 +33,7 @@ const SpinHistory = () => {
       <div className="space-y-2">
         {history.map((spin, index) => (
           <div
-            key={spin.segment.id || index}
+            key={spin.segment.label + index}
             className={`flex items-center justify-between p-2 rounded ${
               isDark ? 'bg-gray-700' : 'bg-gray-100'
             }`}
