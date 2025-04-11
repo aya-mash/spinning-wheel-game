@@ -3,6 +3,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { WheelSegment, SpinResult } from "../types/wheel";
 import useSound from "use-sound";
 import { useTheme } from "../context/hooks/theme";
+import { useAudioContext } from "../context/hooks/audio";
 
 interface WheelSpinnerProps {
   segments: WheelSegment[];
@@ -18,51 +19,108 @@ export const WheelSpinner = ({
   const [isSpinning, setIsSpinning] = useState(false);
   const [rotation, setRotation] = useState(0);
   const [selectedSegment, setSelectedSegment] = useState(1);
+  const [error, setError] = useState<string | null>(null);
   const totalRotationRef = useRef(0);
+  const spinTimeoutRef = useRef<number | null>(null);
   const { isDark } = useTheme();
-  const [playTick] = useSound("/sounds/tick.mp3", { volume: 0.5 });
-  const [playWin] = useSound("/sounds/win.mp3", { volume: 0.7 });
+  const { isAudioEnabled, enableAudio } = useAudioContext();
+
+  const [playTick] = useSound("/sounds/tick.mp3", {
+    volume: 0.5,
+    interrupt: true,
+  });
+  const [playWin] = useSound("/sounds/win.mp3", {
+    volume: 0.7,
+    interrupt: true,
+  });
 
   const segmentsCount = segments.length;
   const segmentDegree = 360 / segmentsCount;
 
+  useEffect(() => {
+    return () => {
+      if (spinTimeoutRef.current) {
+        clearTimeout(spinTimeoutRef.current);
+      }
+    };
+  }, []);
+
+  const validateSegmentSelection = useCallback(
+    (segment: number): boolean => {
+      return segment >= 1 && segment <= segments.length;
+    },
+    [segments.length]
+  );
+
+  const handleSegmentChange = (value: string) => {
+    const segment = parseInt(value, 10);
+    if (validateSegmentSelection(segment)) {
+      setSelectedSegment(segment);
+      setError(null);
+    } else {
+      setError(`Please select a segment between 1 and ${segments.length}`);
+    }
+  };
+
   const spin = useCallback(
-    (isPredetermined: boolean) => {
+    async (isPredetermined: boolean) => {
       if (isSpinning || segments.length === 0) return;
 
-      setIsSpinning(true);
-      playTick();
+      try {
+        if (!isAudioEnabled) {
+          await enableAudio();
+        }
 
-      const targetIndex = isPredetermined
-        ? selectedSegment
-        : Math.floor(Math.random() * segments.length);
+        setIsSpinning(true);
+        setError(null);
+        playTick();
 
-      const baseRotation = 360 * 5; // 5 full rotations
-      const targetDegree =
-        360 - (targetIndex * segmentDegree + segmentDegree / 2);
-      const finalRotation = baseRotation + targetDegree;
+        const targetIndex = isPredetermined
+          ? selectedSegment
+          : Math.floor(Math.random() * segments.length);
 
-      totalRotationRef.current += finalRotation;
-      setRotation(totalRotationRef.current);
+        if (!validateSegmentSelection(targetIndex)) {
+          throw new Error("Invalid segment selected");
+        }
 
-      setTimeout(() => {
+        const baseRotation = 360 * 5;
+        const targetDegree =
+          360 - (targetIndex * segmentDegree + segmentDegree / 2);
+        const finalRotation = baseRotation + targetDegree;
+
+        totalRotationRef.current += finalRotation;
+        setRotation(totalRotationRef.current);
+
+        spinTimeoutRef.current = window.setTimeout(() => {
+          setIsSpinning(false);
+          playWin();
+          onSpinComplete({
+            segment: segments[targetIndex - 1],
+            degrees: totalRotationRef.current % 360,
+          });
+        }, spinDuration);
+      } catch (err) {
         setIsSpinning(false);
-        playWin();
-        onSpinComplete({
-          segment: segments[targetIndex - 1],
-          degrees: totalRotationRef.current % 360,
-        });
-      }, spinDuration);
+        setError(
+          err instanceof Error
+            ? err.message
+            : "An error occurred while spinning"
+        );
+        console.error("Spin error:", err);
+      }
     },
     [
       isSpinning,
       segments,
-      selectedSegment,
-      segmentDegree,
-      onSpinComplete,
-      spinDuration,
+      isAudioEnabled,
       playTick,
+      selectedSegment,
+      validateSegmentSelection,
+      segmentDegree,
+      spinDuration,
+      enableAudio,
       playWin,
+      onSpinComplete,
     ]
   );
 
@@ -73,6 +131,15 @@ export const WheelSpinner = ({
 
   return (
     <div className="flex flex-col items-center gap-8">
+      {error && (
+        <div
+          className="w-full max-w-xs bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative"
+          role="alert"
+        >
+          <span className="block sm:inline">{error}</span>
+        </div>
+      )}
+
       <motion.div
         initial={{ scale: 0.9, opacity: 0 }}
         animate={{ scale: 1, opacity: 1 }}
@@ -137,6 +204,7 @@ export const WheelSpinner = ({
       >
         <div className="space-y-2">
           <label
+            htmlFor="segment-select"
             className={`block text-sm font-medium ${
               isDark ? "text-gray-200" : "text-gray-700"
             }`}
@@ -144,13 +212,15 @@ export const WheelSpinner = ({
             Select segment (1-{segments.length}):
           </label>
           <motion.input
+            id="segment-select"
             type="range"
             min="1"
             max={segments.length}
             value={selectedSegment}
-            onChange={(e) => setSelectedSegment(parseInt(e.target.value))}
+            onChange={(e) => handleSegmentChange(e.target.value)}
             className="w-full"
             whileFocus={{ scale: 1.02 }}
+            aria-label={`Select segment between 1 and ${segments.length}`}
           />
           <div
             className={`text-center ${
@@ -178,6 +248,9 @@ export const WheelSpinner = ({
                   ? "bg-blue-600 hover:bg-blue-700 text-white"
                   : "bg-blue-500 hover:bg-blue-600 text-white"
               } disabled:opacity-50 disabled:cursor-not-allowed`}
+              aria-label={
+                isSpinning ? "Wheel is spinning" : "Spin wheel randomly"
+              }
             >
               {isSpinning ? (
                 <div className="flex items-center justify-center gap-2">
@@ -198,6 +271,11 @@ export const WheelSpinner = ({
                   ? "bg-green-600 hover:bg-green-700 text-white"
                   : "bg-green-500 hover:bg-green-600 text-white"
               } disabled:opacity-50 disabled:cursor-not-allowed`}
+              aria-label={
+                isSpinning
+                  ? "Wheel is spinning"
+                  : "Spin wheel to selected segment"
+              }
             >
               {isSpinning ? (
                 <div className="flex items-center justify-center gap-2">
